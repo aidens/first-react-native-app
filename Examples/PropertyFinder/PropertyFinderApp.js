@@ -5,7 +5,7 @@
 var React = require('react-native');
 
 // Application routing
-var SearchPage = require('./Search');
+var SearchPage = require('./SearchPage');
 
 // load stylesheet
 var styles = React.StyleSheet.create({
