@@ -2,6 +2,9 @@
 
 var React = require('react-native');
 
+// Application routing from Search Results
+var SearchResults = require('./SearchResult');
+
 
 //Destructuring assignment
 //which lets you extract multiple object properties
@@ -120,18 +123,16 @@ class SearchPage extends Component {
 
   //Handle Response
   _handleResponse(response) {
-    this.setState({ isLoading: false });
+    this.setState({ isLoading: false , message: '' });
     if (response.application_response_code.substr(0, 1) === '1') {
       this.props.navigator.push({
-        title: 'Results',
-        component: SearchResults,
-        passProps: {listings: response.listings}
-      });
+      title: 'Results',
+      component: SearchResults,
+      passProps: {listings: response.listings}});
     } else {
-      this.setState({ message: 'Location not recognized please try again.'});
+      this.setState({ message: 'Location not recognized; please try again.'});
     }
   }
-
   _executeQuery(query) {
     this.setState({ isLoading: true, message: '' });
     fetch(query)
@@ -150,7 +151,6 @@ class SearchPage extends Component {
   this._executeQuery(query);
   }
 
-
   onLocationPressed() {
     navigator.geolocation.getCurrentPosition(
       location => {
@@ -161,7 +161,7 @@ class SearchPage extends Component {
       },
       error => {
         this.setState({
-          message: 'There was a problem with obtaining your locaton: ' + error
+          message: 'There was a problem with obtaining your location: ' + error
         });
       });
   }
